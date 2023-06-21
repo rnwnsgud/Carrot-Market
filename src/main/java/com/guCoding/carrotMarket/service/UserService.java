@@ -27,8 +27,9 @@ public class UserService {
 
         boolean isPresent = true;
         JoinRespDto joinRespDto = null;
+        Random random = new Random();
         while (isPresent) {
-            Random random = new Random();
+
             String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             int length = 6;  // 조합된 문자열의 길이
 
