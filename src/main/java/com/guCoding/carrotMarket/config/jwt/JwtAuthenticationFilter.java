@@ -2,13 +2,12 @@ package com.guCoding.carrotMarket.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guCoding.carrotMarket.config.auth.LoginUser;
-import com.guCoding.carrotMarket.dto.user.UserReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.LoginReqDto;
-import com.guCoding.carrotMarket.dto.user.UserRespDto;
 import com.guCoding.carrotMarket.dto.user.UserRespDto.LoginRespDto;
 import com.guCoding.carrotMarket.util.CustomResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -29,10 +28,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final StringRedisTemplate redisTemplate;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationManager authenticationManager1, JwtProvider jwtProvider) {
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationManager authenticationManager1, JwtProvider jwtProvider, StringRedisTemplate redisTemplate) {
         super(authenticationManager);
+        this.redisTemplate = redisTemplate;
         setFilterProcessesUrl("/api/users/login");
         this.authenticationManager = authenticationManager1;
         this.jwtProvider = jwtProvider;
@@ -66,10 +67,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
         LoginUser loginUser = (LoginUser) authResult.getPrincipal();
-        String jwtToken = jwtProvider.create(loginUser);
-        log.debug("jwtToken", jwtToken);
-        response.addHeader("Authorization", jwtToken);
-        LoginRespDto loginRespDto = new LoginRespDto(loginUser.getUser(), jwtToken);
+        String accessToken = jwtProvider.accessTokenCreate(loginUser);
+        String refreshToken = jwtProvider.refreshTokenCreate(loginUser);
+//        log.debug("accessToken " + accessToken);
+        response.addHeader("ACCESS_TOKEN", accessToken);
+        response.addHeader("REFRESH_TOKEN", refreshToken);
+        LoginRespDto loginRespDto = new LoginRespDto(loginUser.getUser(), accessToken, refreshToken);
+
+        redisTemplate.opsForValue().set(loginUser.getUser().getId().toString(), refreshToken);
 
         CustomResponseUtil.success(response, loginRespDto);
 

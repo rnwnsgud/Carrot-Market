@@ -24,7 +24,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
-                .securitySchemes(List.of(this.apiKey()))
+                .securitySchemes(List.of(this.apiKey(), this.refreshTokenKey()))
                 .ignoredParameterTypes(LoginUser.class)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.guCoding.carrotMarket"))
@@ -44,7 +44,7 @@ public class SwaggerConfig {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return List.of(new SecurityReference("Authorization", authorizationScopes));
+        return List.of(new SecurityReference("ACCESS_TOKEN", authorizationScopes), new SecurityReference("REFRESH_TOKEN", authorizationScopes));
     }
 
 
@@ -52,14 +52,20 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("todoList")
-                .description("SwaggerConfig")
+                .title("Carrot-market")
+                .description("당근마켓 기능구현")
                 .version("3.0.0")
                 .build();
     }
 
     // 요청헤더, 매개변수이름, 위치
     private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
+        return new ApiKey("ACCESS_TOKEN", "ACCESS_TOKEN", "header");
     }
+
+    private ApiKey refreshTokenKey() {
+        return new ApiKey("REFRESH_TOKEN", "REFRESH_TOKEN", "header");
+    }
+
+
 }

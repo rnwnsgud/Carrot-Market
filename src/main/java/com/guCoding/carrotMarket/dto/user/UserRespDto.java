@@ -25,13 +25,15 @@ public class UserRespDto {
         private Long id;
         private String nickname;
         private String createdAt;
-        private String jwtToken;
+        private String accessToken;
+        private String refreshToken;
 
-        public LoginRespDto(User user, String jwtToken) {
+        public LoginRespDto(User user, String accessToken, String refreshToken) {
             this.id = user.getId();
             this.nickname = user.getNickname();
             this.createdAt = CustomDateUtil.toStringFormat(user.getCreateDate());
-            this.jwtToken = jwtToken;
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
         }
     }
 }

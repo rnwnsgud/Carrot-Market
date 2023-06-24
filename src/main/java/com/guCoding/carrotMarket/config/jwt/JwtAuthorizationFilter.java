@@ -23,8 +23,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final JwtProvider jwtProvider;
 
-    @Value("${jwt.header:null}")
-    private String HEADER;
+    @Value("${jwt.access_header:null}")
+    private String ACCESS_HEADER;
 
     @Value("${jwt.token_prefix:null}")
     private String TOKEN_PREFIX;
@@ -39,9 +39,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (isHeaderVerify(request, response)) {
             log.debug("디버그 : 토큰이 존재함");
-            String token = request.getHeader(HEADER).replace(TOKEN_PREFIX, "");
+            String accessToken = request.getHeader(ACCESS_HEADER).replace(TOKEN_PREFIX, "");
 
-            LoginUser loginUser = jwtProvider.verify(token);
+            LoginUser loginUser = jwtProvider.verify(accessToken);
             log.debug("디버그 : 토큰이 검증이 완료됨");
 
             // 임시 세션 (UserDetails 타입 or username) id,role 만 존재
@@ -53,8 +53,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private boolean isHeaderVerify(HttpServletRequest request, HttpServletResponse response) {
-        String header = request.getHeader(HEADER);
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        String accessHeader = request.getHeader(ACCESS_HEADER);
+//        log.debug("ACCESS_HEADER " + ACCESS_HEADER);
+//        log.debug("get_HEADER " + accessHeader);
+//        log.debug("TOKEN_PREFIX " + TOKEN_PREFIX);
+        if (accessHeader == null || !accessHeader.startsWith(TOKEN_PREFIX)) {
             return false;
         } else {
             return true;

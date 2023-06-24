@@ -21,12 +21,20 @@ public class JwtProvider {
     private String TOKEN_PREFIX;
 
     // 토큰 생성
-    public String create(LoginUser loginUser) {
+    public String accessTokenCreate(LoginUser loginUser) {
         String jwtToken = JWT.create()
-                .withSubject("todoList")
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7  )) // 타입조심
+                .withSubject("accessToken")
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * 60)) // 타입조심 1시간
                 .withClaim("id", loginUser.getUser().getId())
                 .withClaim("role", loginUser.getUser().getRole().name())
+                .sign(Algorithm.HMAC512(SECRET));
+        return TOKEN_PREFIX + jwtToken;
+    }
+    public String refreshTokenCreate(LoginUser loginUser) {
+        String jwtToken = JWT.create()
+                .withSubject("refreshToken")
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7)) // 타입조심 1주일
+                .withClaim("id", loginUser.getUser().getId())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwtToken;
     }

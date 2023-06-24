@@ -71,7 +71,8 @@ public class SecurityConfig {
         configuration.addAllowedMethod("*");
         configuration.addAllowedOriginPattern("*"); // 모든 ip 주소 허용 (프론트 엔드 IP만 허용 react)
         configuration.setAllowCredentials(true); // 클라이언트의 쿠키 요청 허용
-        configuration.addExposedHeader("Authorization"); // 브라우저에 Authorization 헤더 노출, 클라이언트가 저장하기 위해서
+        configuration.addExposedHeader("ACCESS_TOKEN"); // 브라우저에 Authorization 헤더 노출, 클라이언트가 저장하기 위해서
+        configuration.addExposedHeader("REFRESH_TOKEN"); // 브라우저에 REFRESH_TOKEN 헤더 노출, 클라이언트가 저장하기 위해서
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration); // 모든 주소요청에 위 설정을 넣어주겠다.
         return source;
