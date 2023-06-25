@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@Profile("dev") //**
+@Profile("dev")
 public class RedisConfig {
 
     @Value("${spring.redis.host}")
@@ -21,6 +21,14 @@ public class RedisConfig {
 
     @Value("${spring.redis.port}")
     private int redisPort;
+
+    // Redis 초기화
+    @Bean
+    public CommandLineRunner redisDataClearRunner() {
+        return args -> {
+            stringRedisTemplate().getConnectionFactory().getConnection().flushDb();
+        };
+    }
 
     // Redis 저장소와 연결
     @Bean
@@ -38,10 +46,4 @@ public class RedisConfig {
         return stringRedisTemplate;
     }
 
-    @Bean
-    public CommandLineRunner redisDataClearRunner() {
-        return args -> {
-            stringRedisTemplate().getConnectionFactory().getConnection().flushDb();
-        };
-    }
 }
