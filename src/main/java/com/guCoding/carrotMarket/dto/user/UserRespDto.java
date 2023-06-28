@@ -11,11 +11,11 @@ public class UserRespDto {
     @Setter
     public static class JoinRespDto {
         private Long id;
-        private String nickname;
+        private String identifier;
 
         public JoinRespDto(User user) {
             this.id = user.getId();
-            this.nickname = user.getNickname();
+            this.identifier = user.getIdentifier();
         }
     }
 

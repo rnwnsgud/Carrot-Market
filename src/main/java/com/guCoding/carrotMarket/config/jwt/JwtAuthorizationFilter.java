@@ -65,7 +65,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 // accessToken 검증에 실패하면 refreshToken 검증 후 재발급
                 log.debug("Access Token 오류");
                 LoginUser loginUser = jwtProvider.refreshTokenVerify(refreshToken);
-                log.debug("refreshToken으로 만든 loginUser " + loginUser.getUser().getId());
 
                 String reissuedAccessToken = jwtProvider.accessTokenCreate(loginUser);
                 String reissuedRefreshToken = jwtProvider.refreshTokenCreate(loginUser);

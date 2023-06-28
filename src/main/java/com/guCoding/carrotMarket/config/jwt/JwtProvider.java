@@ -39,8 +39,8 @@ public class JwtProvider {
     public String accessTokenCreate(LoginUser loginUser) {
         String jwtToken = JWT.create()
                 .withSubject("accessToken")
-//                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * 60)) //  1시간
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60)) //  테스트용 : 1분
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60 * 60)) //  1시간
+//                .withExpiresAt(new Date(System.currentTimeMillis() + 1000L * 60)) //  테스트용 : 1분
                 .withClaim("id", loginUser.getUser().getId())
                 .withClaim("role", loginUser.getUser().getRole().name())
                 .sign(Algorithm.HMAC512(SECRET));
@@ -67,15 +67,12 @@ public class JwtProvider {
     }
 
     public LoginUser refreshTokenVerify(String token) {
-        log.debug("진입 : refreshTokenVerify");
-        log.debug("token : " + token);
 
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET)).build().verify(token);
-
         Long id = decodedJWT.getClaim("id").asLong();
-        log.debug("id : " + id);
+
         String tokenInRedis = redisTemplate.opsForValue().get(id.toString());
-        log.debug("tokenInRedis : " + tokenInRedis);
+
         if (token.equals(tokenInRedis.replace(TOKEN_PREFIX, ""))) {
             User userPS = userRepository.findById(id).orElseThrow(() -> new CustomApiException("유저가 존재하지 않습니다."));
             LoginUser loginUser = new LoginUser(userPS);

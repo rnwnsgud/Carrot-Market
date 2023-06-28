@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("/api/users/join")
     public ResponseEntity<?> join(@RequestBody @Valid JoinReqDto joinReqDto, BindingResult bindingResult){
         JoinRespDto joinRespDto = userService.회원가입(joinReqDto);
-        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 완료", joinRespDto), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 완료", joinRespDto), HttpStatus.CREATED);
     }
 
     @Operation(summary = "로그인", description = "바디에 {password, phoneNumber} 을 json 형식으로 보내주세요, 토큰은 Bearer을 포함해주세요")
