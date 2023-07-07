@@ -1,5 +1,6 @@
 package com.guCoding.carrotMarket.config;
 
+import com.guCoding.carrotMarket.config.auth.OAuth2DetailsService;
 import com.guCoding.carrotMarket.config.jwt.JwtAuthenticationFilter;
 import com.guCoding.carrotMarket.config.jwt.JwtAuthorizationFilter;
 import com.guCoding.carrotMarket.util.CustomResponseUtil;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final OAuth2DetailsService oAuth2DetailsService;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Bean
@@ -35,16 +37,22 @@ public class SecurityConfig {
         http.formLogin().disable();
         http.httpBasic().disable();
 
+        http.oauth2Login().userInfoEndpoint().userService(oAuth2DetailsService);
+        // userInfoEndpoint : 인증코드-> accesstoken 받는대신에 바로 회원정보 받기
+        // userService : 회원정보를 받는 곳
+
         // 필터 적용
         http.apply(new CustomSecurityFilterManager());
 
         // 인증실패 예외 가로채기
         http.exceptionHandling().authenticationEntryPoint((request, response, e) -> {
+            log.error("error : " + e.getMessage());
             CustomResponseUtil.fail(response, "로그인을 진행 해주세요 .", HttpStatus.UNAUTHORIZED);
         });
 
         // 권한실패 예외 가로채기
         http.exceptionHandling().accessDeniedHandler((request, response, e) -> {
+            log.error("error : " + e.getMessage());
             CustomResponseUtil.fail(response, "권한이 없습니다.", HttpStatus.FORBIDDEN);
         });
 

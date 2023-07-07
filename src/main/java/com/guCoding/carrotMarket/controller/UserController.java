@@ -1,5 +1,6 @@
 package com.guCoding.carrotMarket.controller;
 
+import com.guCoding.carrotMarket.config.auth.LoginUser;
 import com.guCoding.carrotMarket.dto.ResponseDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.JoinReqDto;
@@ -14,14 +15,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -29,6 +36,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PostMapping("/api/users/join")
     public ResponseEntity<?> join(@RequestBody @Valid JoinReqDto joinReqDto, BindingResult bindingResult){
@@ -43,8 +51,11 @@ public class UserController {
     }
 
     @GetMapping("/api/s/users")
-    public ResponseEntity<?> checkAuth(){
-
+    public ResponseEntity<?> checkAuth(@AuthenticationPrincipal LoginUser loginUser){
+        log.debug("loginUser : " + loginUser);
         return new ResponseEntity<>(new ResponseDto<>(1, "인증성공", null), HttpStatus.OK);
     }
+
+
+
 }
