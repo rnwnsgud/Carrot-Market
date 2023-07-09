@@ -1,6 +1,6 @@
 package com.guCoding.carrotMarket.config;
 
-import com.guCoding.carrotMarket.config.auth.OAuth2DetailsService;
+import com.guCoding.carrotMarket.config.oauth.OAuth2DetailsService;
 import com.guCoding.carrotMarket.config.jwt.JwtAuthenticationFilter;
 import com.guCoding.carrotMarket.config.jwt.JwtAuthorizationFilter;
 import com.guCoding.carrotMarket.util.CustomResponseUtil;
@@ -13,10 +13,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Configuration
@@ -26,6 +32,7 @@ public class SecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final OAuth2DetailsService oAuth2DetailsService;
     private final Logger log = LoggerFactory.getLogger(getClass());
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -86,5 +93,45 @@ public class SecurityConfig {
         return source;
     }
 
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(Arrays.asList(
+                naverClientRegistration(), googleClientRegistration()
+        ));
+    }
 
+    @Bean
+    public ClientRegistration naverClientRegistration() {
+        return ClientRegistration.withRegistrationId("naver")
+                .clientId("oyDyrNgKIKkKPsKzIESp")
+                .clientSecret("ztzbpmbqnv")
+                .clientName("Naver")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .redirectUri("http://localhost:8081/login/oauth2/code/naver")
+                .authorizationUri("https://nid.naver.com/oauth2.0/authorize")
+                .tokenUri("https://nid.naver.com/oauth2.0/token")
+                .userInfoUri("https://openapi.naver.com/v1/nid/me")
+                .userNameAttributeName("response")
+                .build();
+    }
+
+    @Bean
+    public ClientRegistration googleClientRegistration() {
+        return ClientRegistration.withRegistrationId("google")
+                .clientId("1073676359956-206aeun04thjg7kjuf1nt8apgkegkc4h.apps.googleusercontent.com")
+                .clientSecret("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")
+                .clientName("Google")
+                .scope("email", "profile")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+                .tokenUri("https://www.googleapis.com/oauth2/v4/token")
+                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+                .userNameAttributeName("sub")
+                .redirectUri("http://localhost:8081/login/oauth2/code/google")
+                .clientName("Google")
+                .build();
+    }
 }
+
+
+

@@ -37,19 +37,10 @@ spring:
     oauth2:
       client:
         registration:
-          facebook:
-            client-id: 798742131715684
-            client-secret: 113831325e26b47a76a59ca8fab42895
-            scope:
-              - public_profile
-              - email
           google:
             client-id: 1073676359956-206aeun04thjg7kjuf1nt8apgkegkc4h.apps.googleusercontent.com
             client-secret: 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
             scope: email, profile
-
-
-
 
 logging:
   level:

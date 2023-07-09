@@ -19,7 +19,7 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length = 40)
+    @Column(nullable = false,length = 60)
     private String nickname;
 
     @Column(nullable = false, length = 60)
@@ -31,8 +31,11 @@ public class User extends BaseTimeEntity {
     @Column(length = 40, unique = true)
     private String email;
 
-    @Column(unique = true, length = 11)
+    @Column(unique = true, length = 13)
     private String phoneNumber;
+
+    @Column(length = 10)
+    private String username;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -44,7 +47,7 @@ public class User extends BaseTimeEntity {
     private List<TownEnum> myHometown = new ArrayList();
 
     @Builder
-    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> myHometown) {
+    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> myHometown, String username) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -53,6 +56,7 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.myHometown = myHometown;
+        this.username = username;
     }
 
 

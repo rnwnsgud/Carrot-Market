@@ -27,6 +27,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private final JwtProvider jwtProvider;
     private final StringRedisTemplate redisTemplate;
 
+
     @Value("${jwt.access_header:null}")
     private String ACCESS_HEADER;
 
