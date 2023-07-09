@@ -49,6 +49,10 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
             userInfo = new GoogleOAuth2(oAuth2User.getAttributes());
         } else if (registrationId.equals("naver")) {
             userInfo = new NaverOAuth2((Map) oAuth2User.getAttributes().get("response"));
+        } else if (registrationId.equals("kakao")) {
+            userInfo = new KakaoOAuth2(oAuth2User.getAttributes());
+        } else {
+            throw new CustomApiException("OAuth2 로그인 실패");
         }
 
         String nickname = "USER_" + userInfo.getName();
@@ -65,7 +69,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         Optional<User> userOP = userRepository.findByEmail(userInfo.getEmail());
 
         if (userOP.isEmpty()) {
-            String returnIdentifier = randomIdentifier("USER_"+userInfo.getProviderId(), userRepository);
+            String returnIdentifier = randomIdentifier("USER_"+userInfo.getName(), userRepository);
 
             User user = getUser(nickname, password, email, returnIdentifier, mobile, username);
             User userPS = userRepository.save(user);

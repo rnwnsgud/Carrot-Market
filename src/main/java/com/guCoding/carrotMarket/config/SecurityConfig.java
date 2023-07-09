@@ -96,7 +96,7 @@ public class SecurityConfig {
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository() {
         return new InMemoryClientRegistrationRepository(Arrays.asList(
-                naverClientRegistration(), googleClientRegistration()
+                naverClientRegistration(), googleClientRegistration(), kakaoClientRegistration()
         ));
     }
 
@@ -129,6 +129,21 @@ public class SecurityConfig {
                 .userNameAttributeName("sub")
                 .redirectUri("http://localhost:8081/login/oauth2/code/google")
                 .clientName("Google")
+                .build();
+    }
+
+    @Bean
+    public ClientRegistration kakaoClientRegistration() {
+        return ClientRegistration.withRegistrationId("kakao")
+                .clientId("40ac64076eddb6ddb270dce872e19935")
+                .clientName("Kakao")
+                .scope("profile_nickname", "profile_image", "account_email")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationUri("https://kauth.kakao.com/oauth/authorize")
+                .tokenUri("https://kauth.kakao.com/oauth/token")
+                .userInfoUri("https://kapi.kakao.com/v2/user/me")
+                .userNameAttributeName("id")
+                .redirectUri("http://localhost:8081/login/oauth2/code/kakao")
                 .build();
     }
 }
