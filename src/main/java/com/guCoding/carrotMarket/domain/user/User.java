@@ -1,6 +1,8 @@
 package com.guCoding.carrotMarket.domain.user;
 
 import com.guCoding.carrotMarket.domain.BaseTimeEntity;
+import com.guCoding.carrotMarket.dto.user.UserReqDto;
+import com.guCoding.carrotMarket.dto.user.UserReqDto.EditReqDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,6 +59,16 @@ public class User extends BaseTimeEntity {
         this.role = role;
         this.myHometown = myHometown;
         this.username = username;
+    }
+
+    public void changeUserInfo(EditReqDto editReqDto) {
+        if(!editReqDto.getEmail().isBlank()) {
+            this.email = editReqDto.getEmail();
+        }
+
+        if(!editReqDto.getPhoneNumber().isBlank()) {
+            this.phoneNumber = editReqDto.getPhoneNumber();
+        }
     }
 
 

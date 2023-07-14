@@ -3,6 +3,7 @@ package com.guCoding.carrotMarket.controller;
 import com.guCoding.carrotMarket.config.auth.LoginUser;
 import com.guCoding.carrotMarket.dto.ResponseDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto;
+import com.guCoding.carrotMarket.dto.user.UserReqDto.EditReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.JoinReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.LoginReqDto;
 import com.guCoding.carrotMarket.dto.user.UserRespDto;
@@ -22,10 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,6 +52,12 @@ public class UserController {
     public ResponseEntity<?> checkAuth(@AuthenticationPrincipal LoginUser loginUser){
         log.debug("loginUser : " + loginUser);
         return new ResponseEntity<>(new ResponseDto<>(1, "인증성공", null), HttpStatus.OK);
+    }
+
+    @PutMapping("/api/s/users")
+    public ResponseEntity<?> editUser(@RequestBody @Valid EditReqDto editReqDto, @AuthenticationPrincipal LoginUser loginUser){
+        userService.회원정보수정(loginUser.getUser().getId(), editReqDto);
+        return new ResponseEntity<>(new ResponseDto<>(1, "회원정보수정 완료", null), HttpStatus.OK);
     }
 
 

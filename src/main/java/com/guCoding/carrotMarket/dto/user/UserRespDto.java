@@ -36,4 +36,16 @@ public class UserRespDto {
             this.refreshToken = refreshToken;
         }
     }
+
+    @Getter
+    @Setter
+    public static class EditRespDto {
+        private String email;
+        private String phoneNumber;
+
+        public EditRespDto(User user) {
+            this.email = user.getEmail();
+            this.phoneNumber = user.getPhoneNumber();
+        }
+    }
 }

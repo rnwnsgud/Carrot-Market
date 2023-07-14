@@ -3,8 +3,10 @@ package com.guCoding.carrotMarket.service;
 import com.guCoding.carrotMarket.domain.user.User;
 import com.guCoding.carrotMarket.domain.user.UserRepository;
 import com.guCoding.carrotMarket.dto.user.UserReqDto;
+import com.guCoding.carrotMarket.dto.user.UserReqDto.EditReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.JoinReqDto;
 import com.guCoding.carrotMarket.dto.user.UserRespDto;
+import com.guCoding.carrotMarket.dto.user.UserRespDto.EditRespDto;
 import com.guCoding.carrotMarket.dto.user.UserRespDto.JoinRespDto;
 import com.guCoding.carrotMarket.handler.ex.CustomApiException;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +55,11 @@ public class UserService {
         }
         return joinRespDto;
 
+    }
+
+    public EditRespDto 회원정보수정(Long userId, EditReqDto editReqDto) {
+        User userPS = userRepository.findById(userId).orElseThrow(() -> new CustomApiException("해당 id의 사용자가 없습니다."));
+        userPS.changeUserInfo(editReqDto);
+        return new EditRespDto(userPS);
     }
 }

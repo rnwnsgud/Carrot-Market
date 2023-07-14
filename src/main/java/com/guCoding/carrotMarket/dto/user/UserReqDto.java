@@ -61,5 +61,16 @@ public class UserReqDto {
         private String password;
     }
 
+    @Getter
+    @Setter
+    public static class EditReqDto {
+        @Schema(example = "ssar@nate.com")
+        @Email
+        private String email;
+        @Schema(example = "01099998888")
+        @Pattern(regexp = "^[0-9]{9,15}$", message = "전화번호 형식으로 입력해주세요.")
+        private String phoneNumber;
+    }
+
 
 }
