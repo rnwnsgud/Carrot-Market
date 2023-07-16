@@ -103,7 +103,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
                 .identifier(returnIdentifier)
                 .email(email)
                 .role(UserEnum.USER)
-                .myHometown(townEnums)
+                .townEnums(townEnums)
                 .phoneNumber(phoneNumber)
                 .username(username)
                 .build();

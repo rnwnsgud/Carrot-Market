@@ -1,10 +1,14 @@
 package com.guCoding.carrotMarket.config.dummy;
 
+import com.guCoding.carrotMarket.domain.stuff.Stuff;
+import com.guCoding.carrotMarket.domain.stuff.StuffEnum;
+import com.guCoding.carrotMarket.domain.stuff.TransactionEnum;
 import com.guCoding.carrotMarket.domain.user.TownEnum;
 import com.guCoding.carrotMarket.domain.user.User;
 import com.guCoding.carrotMarket.domain.user.UserEnum;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +25,30 @@ public class DummyObject {
                 .id(id)
                 .phoneNumber(phoneNumber)
                 .nickname(nickname)
-                .myHometown(townEnums)
+                .townEnums(townEnums)
                 .password(encPassword)
                 .identifier(nickname + "#12AB34")
                 .role(UserEnum.USER)
                 .build();
 
     }
+
+    protected Stuff newMockStuff(Long id, String title, int price, String description, boolean gettingPriceOffer, User user) {
+
+        List<StuffEnum> stuffEnums = new ArrayList<>();
+        stuffEnums.add(StuffEnum.FURNITURE);
+
+        return Stuff.builder()
+                .id(id)
+                .title(title)
+                .transactionEnum(TransactionEnum.SELLING)
+                .townEnum(TownEnum.삼산동)
+                .stuffEnums(stuffEnums)
+                .price(price)
+                .description(description)
+                .gettingPriceOffer(gettingPriceOffer)
+                .user(user)
+                .build();
+    }
+
 }

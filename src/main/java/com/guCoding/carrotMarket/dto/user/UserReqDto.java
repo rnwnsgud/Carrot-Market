@@ -45,7 +45,7 @@ public class UserReqDto {
                     .phoneNumber(phoneNumber)
                     .identifier(identifier)
                     .role(UserEnum.USER)
-                    .myHometown(townEnums)
+                    .townEnums(townEnums)
 //                    .role(UserEnum.ADMIN)
                     .build();
         }

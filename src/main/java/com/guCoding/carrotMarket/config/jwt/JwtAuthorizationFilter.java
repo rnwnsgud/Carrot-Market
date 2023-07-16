@@ -80,17 +80,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             }
 
-
-
         }
         chain.doFilter(request, response);
     }
 
     private boolean isHeaderVerify(HttpServletRequest request, HttpServletResponse response) {
         String accessHeader = request.getHeader(ACCESS_HEADER);
-//        log.debug("ACCESS_HEADER " + ACCESS_HEADER);
-//        log.debug("get_HEADER " + accessHeader);
-//        log.debug("TOKEN_PREFIX " + TOKEN_PREFIX);
+
         if (accessHeader == null || !accessHeader.startsWith(TOKEN_PREFIX)) {
             return false;
         } else {

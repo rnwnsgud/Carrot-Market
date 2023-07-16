@@ -1,6 +1,7 @@
 package com.guCoding.carrotMarket.domain.user;
 
 import com.guCoding.carrotMarket.domain.BaseTimeEntity;
+import com.guCoding.carrotMarket.domain.stuff.Stuff;
 import com.guCoding.carrotMarket.dto.user.UserReqDto;
 import com.guCoding.carrotMarket.dto.user.UserReqDto.EditReqDto;
 import lombok.AccessLevel;
@@ -45,11 +46,15 @@ public class User extends BaseTimeEntity {
 
     @ElementCollection // Enum을 문자열로 변환 후 List에 저장, 필요할 때 Enum으로 변환해 사용
     @Enumerated(EnumType.STRING) // 별도 테이블이 생성된다.
+    @CollectionTable(name = "TOWN_ENUM", joinColumns = @JoinColumn(name = "USER_ID"))
     @Column(nullable = false)
-    private List<TownEnum> myHometown = new ArrayList();
+    private List<TownEnum> townEnums = new ArrayList();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Stuff> stuffs = new ArrayList<>();
 
     @Builder
-    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> myHometown, String username) {
+    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> townEnums, String username) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -57,10 +62,11 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
-        this.myHometown = myHometown;
+        this.townEnums = townEnums;
         this.username = username;
     }
 
+    // 수정 필요
     public void changeUserInfo(EditReqDto editReqDto) {
         if(!editReqDto.getEmail().isBlank()) {
             this.email = editReqDto.getEmail();
