@@ -1,5 +1,6 @@
 package com.guCoding.carrotMarket.config.dummy;
 
+import com.guCoding.carrotMarket.domain.account.Account;
 import com.guCoding.carrotMarket.domain.stuff.Stuff;
 import com.guCoding.carrotMarket.domain.stuff.StuffEnum;
 import com.guCoding.carrotMarket.domain.stuff.TransactionEnum;
@@ -47,6 +48,16 @@ public class DummyObject {
                 .price(price)
                 .description(description)
                 .gettingPriceOffer(gettingPriceOffer)
+                .user(user)
+                .build();
+    }
+
+    protected Account newMockAccount(Long id, Long number, Long balance, User user) {
+        return Account.builder()
+                .id(id)
+                .number(number)
+                .password(1234L)
+                .balance(balance)
                 .user(user)
                 .build();
     }

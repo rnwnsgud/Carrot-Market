@@ -58,6 +58,8 @@ public class StuffControllerTest extends DummyObject {
         stuffSaveReqDto.setDescription("중고 tv 팝니다.");
         stuffSaveReqDto.setGettingPriceOffer(true);
         stuffSaveReqDto.setTownEnum("삼산동");
+        stuffSaveReqDto.setStuffEnum("전자기기");
+
 
         String requestBody = om.writeValueAsString(stuffSaveReqDto);
 
@@ -80,6 +82,8 @@ public class StuffControllerTest extends DummyObject {
         stuffSaveReqDto.setDescription("중고 tv 팝니다.");
         stuffSaveReqDto.setGettingPriceOffer(true);
         stuffSaveReqDto.setTownEnum("삼산동");
+        stuffSaveReqDto.setStuffEnum("전자기기");
+
 
         String requestBody = om.writeValueAsString(stuffSaveReqDto);
 
@@ -90,7 +94,7 @@ public class StuffControllerTest extends DummyObject {
         
         //then
         resultActions.andExpect(jsonPath("$.data.transaction").value("나눔하기"));
-//        System.out.println("테스트 : " + responseBody);
+        System.out.println("테스트 : " + responseBody);
 
     }
 
@@ -105,6 +109,7 @@ public class StuffControllerTest extends DummyObject {
         stuffSaveReqDto.setDescription("중고 tv 팝니다.");
         stuffSaveReqDto.setGettingPriceOffer(true);
         stuffSaveReqDto.setTownEnum("삼산동");
+        stuffSaveReqDto.setStuffEnum("전자기기");
 
         String requestBody = om.writeValueAsString(stuffSaveReqDto);
 

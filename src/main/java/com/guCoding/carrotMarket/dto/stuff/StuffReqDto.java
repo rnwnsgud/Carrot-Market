@@ -78,6 +78,7 @@ public class StuffReqDto {
                     .user(user)
                     .build();
         }
+        // 열거형은 각각이 객체 이므로 String과 == 비교는 항상 false 가 나온다.
 
         private TransactionEnum findTransactionEnum(String transactionEnum) {
             for (TransactionEnum transactionEnums : TransactionEnum.values()) {
@@ -90,7 +91,7 @@ public class StuffReqDto {
 
         private TownEnum findTownEnum(String townEnum) {
             for (TownEnum townEnums: TownEnum.values()) {
-                if (townEnums.toString().equals(townEnum)) {
+                if (townEnums.name().equals(townEnum)) {
                     return townEnums;
                 }
             }
@@ -99,7 +100,6 @@ public class StuffReqDto {
 
         private StuffEnum findStuffEnum(String stuffEnum) {
             for (StuffEnum stuffEnums : StuffEnum.values()) {
-                System.out.println("테스트 : stuffEnum " + stuffEnums);
                 if (stuffEnums.getValue().equals(stuffEnum)) {
                     return stuffEnums;
                 }

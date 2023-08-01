@@ -24,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
@@ -32,7 +33,6 @@ public class SecurityConfig {
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final OAuth2DetailsService oAuth2DetailsService;
     private final Logger log = LoggerFactory.getLogger(getClass());
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

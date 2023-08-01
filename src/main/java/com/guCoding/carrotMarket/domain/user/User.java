@@ -44,9 +44,9 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private UserEnum role;
 
-    @ElementCollection // Enum을 문자열로 변환 후 List에 저장, 필요할 때 Enum으로 변환해 사용
+    @ElementCollection // 값 타입 컬렉션을 매핑할 때 사용
     @Enumerated(EnumType.STRING) // 별도 테이블이 생성된다.
-    @CollectionTable(name = "TOWN_ENUM", joinColumns = @JoinColumn(name = "USER_ID"))
+    @CollectionTable(name = "TOWN_ENUM", joinColumns = @JoinColumn(name = "USER_ID")) // 값 타입 컬렉션을 매핑할 테이블에 대한 정보를 지정하는 역할
     @Column(nullable = false)
     private List<TownEnum> townEnums = new ArrayList();
 
