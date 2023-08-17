@@ -47,6 +47,7 @@ public class UserReqDto {
                     .role(UserEnum.USER)
                     .townEnums(townEnums)
 //                    .role(UserEnum.ADMIN)
+                    .mannerTemp(36.5)
                     .build();
         }
     }

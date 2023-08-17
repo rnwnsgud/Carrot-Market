@@ -53,8 +53,10 @@ public class User extends BaseTimeEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Stuff> stuffs = new ArrayList<>();
 
+    private double mannerTemp;
+
     @Builder
-    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> townEnums, String username) {
+    public User(Long id, String nickname, String password, String identifier, String email, String phoneNumber, UserEnum role, List<TownEnum> townEnums, String username, double mannerTemp) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -64,6 +66,7 @@ public class User extends BaseTimeEntity {
         this.role = role;
         this.townEnums = townEnums;
         this.username = username;
+        this.mannerTemp = mannerTemp;
     }
 
     // 수정 필요

@@ -18,33 +18,36 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@RequestMapping("/api/s")
 @RequiredArgsConstructor
 @RestController
 public class AccountController {
 
     private final AccountService accountService;
     
-    @PostMapping("/api/s/account")
+    @PostMapping("/account")
     public ResponseEntity<?> saveAccount(@RequestBody @Valid AccountSaveReqDto accountSaveReqDto,
                                          BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser){
         AccountSaveRespDto accountSaveRespDto = accountService.계좌등록(accountSaveReqDto, loginUser.getUser().getId());
         return new ResponseEntity<>(new ResponseDto<>(1, "계좌등록성공", accountSaveRespDto), HttpStatus.OK);
     }
 
-    @PostMapping("/api/s/charge")
+    @PostMapping("/charge")
     public ResponseEntity<?> chargeAccount(@RequestBody @Valid AccountChargeReqDto accountChargeReqDto, BindingResult bindingResult){
         AccountChargeRespDto accountChargeRespDto = accountService.계좌충전(accountChargeReqDto);
         return new ResponseEntity<>(new ResponseDto<>(1, "계좌충전성공", accountChargeRespDto), HttpStatus.OK);
     }
 
-    @PostMapping("/api/s/transfer")
+    @PostMapping("/transfer")
     public ResponseEntity<?> transferAccount(@RequestBody @Valid AccountTransferReqDto accountTransferReqDto,
                                              BindingResult bindingResult, @AuthenticationPrincipal LoginUser loginUser){
-        AccountTransferRespDto accountTransferRespDto = accountService.판매하기(accountTransferReqDto, loginUser.getUser().getId());
-        return new ResponseEntity<>(new ResponseDto<>(1, "판매하기성공", accountTransferRespDto), HttpStatus.OK);
+        AccountTransferRespDto accountTransferRespDto = accountService.계좌전송(accountTransferReqDto, loginUser.getUser().getId());
+        return new ResponseEntity<>(new ResponseDto<>(1, "계좌전송성공", accountTransferRespDto), HttpStatus.OK);
     }
+
 }

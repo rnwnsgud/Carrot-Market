@@ -122,5 +122,13 @@ public class StuffReqDto {
         }
     }
 
+    @Getter
+    @Setter
+    public static class StuffInquireReqDto {
+        @Schema(example = "삼산동")
+        @NotEmpty
+        TownEnum stuffName;
+    }
+
 
 }

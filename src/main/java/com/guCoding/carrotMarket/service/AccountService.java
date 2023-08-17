@@ -49,8 +49,8 @@ public class AccountService {
         return new AccountChargeRespDto(accountPS);
     }
 
-    // 판매하기
-    public AccountTransferRespDto 판매하기(AccountTransferReqDto accountTransferReqDto, Long userId) {
+    // 계좌 전송
+    public AccountTransferRespDto 계좌전송(AccountTransferReqDto accountTransferReqDto, Long userId) {
 
         if (accountTransferReqDto.getDepositNumber().longValue() == accountTransferReqDto.getWithdrawNumber().longValue()) {
             throw new CustomApiException("출입금 계좌가 동일 할 수 없습니다.");
@@ -90,5 +90,4 @@ public class AccountService {
 
         return new AccountTransferRespDto(depositAccountPS.getBalance() , withdrawAccountPS.getBalance(), transactionPS);
     }
-
 }

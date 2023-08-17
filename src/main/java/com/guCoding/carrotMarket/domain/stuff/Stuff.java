@@ -47,6 +47,7 @@ public class Stuff extends BaseTimeEntity {
 
 //    private boolean isLiked; Like 테이블 있어야하나? -> 이게 있으면, 하나의 유저는 여러 개의 상품을 좋아할 수 있으며, 하나의 상품도 여러 유저로부터 좋아요를 받을 수 있어서 다대다.
     // 테이블로 풀어야겠다.
+    // 가격이 내려가면 알림
 
     @Enumerated(EnumType.STRING)
     private TownEnum townEnum; // 거래장소, User 의 townEnums 에서 하나 가져왔다고 가정
