@@ -72,7 +72,6 @@ public class StuffReqDto {
                     .transactionEnum(findTransactionEnum)
                     .price(price)
                     .description(description)
-                    .gettingPriceOffer(gettingPriceOffer)
                     .townEnum(findTownEnum)
                     .stuffEnums(stuffEnums)
                     .user(user)

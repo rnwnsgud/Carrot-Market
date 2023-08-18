@@ -1,7 +1,9 @@
 package com.guCoding.carrotMarket.dto.stuff;
 
 import com.guCoding.carrotMarket.domain.stuff.Stuff;
+import com.guCoding.carrotMarket.domain.stuff.StuffEnum;
 import com.guCoding.carrotMarket.domain.user.TownEnum;
+import com.guCoding.carrotMarket.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,6 +56,34 @@ public class StuffRespDto {
                 this.createdAt = stuff.getCreateDate();
                 this.price = stuff.getPrice();
             }
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class StuffDetailRespDto {
+        private String username;
+        private List<TownEnum> townEnums;
+        private double mannerTemp;
+
+        private String title;
+        private List<StuffEnum> stuffEnums;
+        private LocalDateTime createdAt;
+        private String description;
+        private int price;
+
+        private int likeCount;
+
+        public StuffDetailRespDto(Stuff stuff, User user) {
+            this.username = user.getUsername();
+            this.townEnums = user.getTownEnums();
+            this.mannerTemp = user.getMannerTemp();
+            this.title = stuff.getTitle();
+            this.stuffEnums = stuff.getStuffEnums();
+            this.createdAt = stuff.getCreateDate();
+            this.description = stuff.getDescription();
+            this.price = stuff.getPrice();
+            this.likeCount = 0;
         }
     }
 }

@@ -8,6 +8,8 @@ import com.guCoding.carrotMarket.domain.user.UserRepository;
 import com.guCoding.carrotMarket.dto.stuff.StuffReqDto;
 import com.guCoding.carrotMarket.dto.stuff.StuffReqDto.StuffInquireReqDto;
 import com.guCoding.carrotMarket.dto.stuff.StuffReqDto.StuffSaveReqDto;
+import com.guCoding.carrotMarket.dto.stuff.StuffRespDto;
+import com.guCoding.carrotMarket.dto.stuff.StuffRespDto.StuffDetailRespDto;
 import com.guCoding.carrotMarket.dto.stuff.StuffRespDto.StuffInquireRespDto;
 import com.guCoding.carrotMarket.dto.stuff.StuffRespDto.StuffSaveRespDto;
 import com.guCoding.carrotMarket.handler.ex.CustomApiException;
@@ -37,5 +39,12 @@ public class StuffService {
     public StuffInquireRespDto 물건지역조회(TownEnum townEnum) {
         List<Stuff> stuffList = stuffRepository.findByTownEnum(townEnum);
         return new StuffInquireRespDto(stuffList);
+    }
+
+    @Transactional(readOnly = true)
+    public StuffDetailRespDto 물건상세조회(Long stuffId, Long userId) {
+        User userPS = userRepository.findById(userId).orElseThrow(() -> new CustomApiException("해당 id 에 해당하는 유저가 없습니다."));
+        Stuff stuffPS = stuffRepository.findById(stuffId).orElseThrow(() -> new CustomApiException("해당 id 에 해당하는 물건이 없습니다."));
+        return new StuffDetailRespDto(stuffPS, userPS);
     }
 }

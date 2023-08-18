@@ -39,9 +39,6 @@ public class Stuff extends BaseTimeEntity {
     @Column(nullable = false)
     private int price;
 
-    // 가격 제안 받기
-    private boolean gettingPriceOffer;
-
     @Column(nullable = false,length = 100)
     private String description;
 
@@ -57,13 +54,12 @@ public class Stuff extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public Stuff(Long id, String title, List<StuffEnum> stuffEnums, TransactionEnum transactionEnum, int price, boolean gettingPriceOffer, String description, TownEnum townEnum, User user) {
+    public Stuff(Long id, String title, List<StuffEnum> stuffEnums, TransactionEnum transactionEnum, int price, String description, TownEnum townEnum, User user) {
         this.id = id;
         this.title = title;
         this.stuffEnums = stuffEnums;
         this.transactionEnum = transactionEnum;
         this.price = price;
-        this.gettingPriceOffer = gettingPriceOffer;
         this.description = description;
         this.townEnum = townEnum;
         this.user = user;
