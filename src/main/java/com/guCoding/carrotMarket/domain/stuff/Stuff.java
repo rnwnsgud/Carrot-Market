@@ -1,6 +1,9 @@
 package com.guCoding.carrotMarket.domain.stuff;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.guCoding.carrotMarket.domain.BaseTimeEntity;
+import com.guCoding.carrotMarket.domain.like.Like;
 import com.guCoding.carrotMarket.domain.user.TownEnum;
 import com.guCoding.carrotMarket.domain.user.User;
 import lombok.AccessLevel;
@@ -42,14 +45,20 @@ public class Stuff extends BaseTimeEntity {
     @Column(nullable = false,length = 100)
     private String description;
 
-//    private boolean isLiked; Like 테이블 있어야하나? -> 이게 있으면, 하나의 유저는 여러 개의 상품을 좋아할 수 있으며, 하나의 상품도 여러 유저로부터 좋아요를 받을 수 있어서 다대다.
-    // 테이블로 풀어야겠다.
-    // 가격이 내려가면 알림
+    @JsonIgnore
+    @OneToMany(mappedBy = "stuff")
+    private List<Like> likes;
+
+    @Transient
+    private boolean likeState;
+
+    @Transient
+    private int likeCount;
 
     @Enumerated(EnumType.STRING)
     private TownEnum townEnum; // 거래장소, User 의 townEnums 에서 하나 가져왔다고 가정
 
-    @JoinColumn(name = "user_tb")
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 

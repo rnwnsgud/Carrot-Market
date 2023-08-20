@@ -28,6 +28,7 @@ public class Account extends BaseTimeEntity {
     @Column(nullable = false)
     private Long balance; // 잔액
 
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // user_id
 
