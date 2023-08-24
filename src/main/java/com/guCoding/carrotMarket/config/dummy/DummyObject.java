@@ -47,7 +47,6 @@ public class DummyObject {
                 .stuffEnums(stuffEnums)
                 .price(price)
                 .description(description)
-                .gettingPriceOffer(gettingPriceOffer)
                 .user(user)
                 .build();
     }

@@ -79,7 +79,7 @@ public class StuffReqDto {
         }
         // 열거형은 각각이 객체 이므로 String과 == 비교는 항상 false 가 나온다.
 
-        private TransactionEnum findTransactionEnum(String transactionEnum) {
+        public static TransactionEnum findTransactionEnum(String transactionEnum) {
             for (TransactionEnum transactionEnums : TransactionEnum.values()) {
                 if (transactionEnums.getValue().equals(transactionEnum)) {
                     return transactionEnums;
@@ -127,6 +127,14 @@ public class StuffReqDto {
         @Schema(example = "삼산동")
         @NotEmpty
         TownEnum stuffName;
+    }
+
+    @Getter
+    @Setter
+    public static class StuffEditReqDto {
+        @Schema(example = "8000")
+        @NotNull
+        int price;
     }
 
 

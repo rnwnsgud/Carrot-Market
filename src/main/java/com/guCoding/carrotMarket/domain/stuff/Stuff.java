@@ -6,6 +6,7 @@ import com.guCoding.carrotMarket.domain.BaseTimeEntity;
 import com.guCoding.carrotMarket.domain.like.Like;
 import com.guCoding.carrotMarket.domain.user.TownEnum;
 import com.guCoding.carrotMarket.domain.user.User;
+import com.guCoding.carrotMarket.handler.ex.CustomApiException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -73,4 +74,23 @@ public class Stuff extends BaseTimeEntity {
         this.townEnum = townEnum;
         this.user = user;
     }
+
+    public void settingLikeState(boolean type) {
+        this.likeState = type;
+    }
+
+    public void settingLikeCount(int size) {
+        this.likeCount = size;
+    }
+
+    public void checkOwner(Long userId) {
+        if (user.getId().longValue() != userId.longValue()) {
+            throw new CustomApiException("물건 소유자가 아닙니다.");
+        }
+    }
+
+    public void changePrice(int price) {
+        this.price = price;
+    }
+
 }

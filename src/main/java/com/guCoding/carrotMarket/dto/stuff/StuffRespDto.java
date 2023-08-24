@@ -2,6 +2,7 @@ package com.guCoding.carrotMarket.dto.stuff;
 
 import com.guCoding.carrotMarket.domain.stuff.Stuff;
 import com.guCoding.carrotMarket.domain.stuff.StuffEnum;
+import com.guCoding.carrotMarket.domain.stuff.TransactionEnum;
 import com.guCoding.carrotMarket.domain.user.TownEnum;
 import com.guCoding.carrotMarket.domain.user.User;
 import lombok.Getter;
@@ -73,6 +74,7 @@ public class StuffRespDto {
         private int price;
 
         private int likeCount;
+        private boolean likeState;
 
         public StuffDetailRespDto(Stuff stuff, User user) {
             this.username = user.getUsername();
@@ -83,7 +85,25 @@ public class StuffRespDto {
             this.createdAt = stuff.getCreateDate();
             this.description = stuff.getDescription();
             this.price = stuff.getPrice();
-            this.likeCount = 0;
+            this.likeCount = stuff.getLikeCount();
+            this.likeState = stuff.isLikeState();
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class StuffEditRespDto {
+        private String title;
+        private TransactionEnum transactionEnum;
+        private int price;
+        private String description;
+
+
+        public StuffEditRespDto(Stuff stuff) {
+            this.title = stuff.getTitle();
+            this.transactionEnum = stuff.getTransactionEnum();
+            this.price = stuff.getPrice();
+            this.description = stuff.getDescription();
         }
     }
 }

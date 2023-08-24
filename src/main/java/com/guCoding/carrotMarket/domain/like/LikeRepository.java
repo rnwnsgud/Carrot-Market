@@ -8,10 +8,10 @@ import org.springframework.data.repository.query.Param;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     @Modifying
-    @Query(value = "INSERT INTO like_tb(stuffId, userId, createDate) VALUES(:stuffId, :userId, now())", nativeQuery = true)
+    @Query(value = "INSERT INTO like_tb(stuff_Id, user_Id, create_Date, last_modified_date) VALUES(:stuffId, :userId, now(), now())", nativeQuery = true)
     void mLike(@Param("stuffId") Long stuffId, @Param("userId") Long userId);
 
     @Modifying
-    @Query(value = "DELETE FROM like_tb WHERE stuffId = :stuffId AND userId = :userId", nativeQuery = true)
+    @Query(value = "DELETE FROM like_tb WHERE stuff_Id = :stuffId AND user_Id = :userId", nativeQuery = true)
     void munLike(@Param("stuffId") Long stuffId, @Param("userId") Long userId);
 }

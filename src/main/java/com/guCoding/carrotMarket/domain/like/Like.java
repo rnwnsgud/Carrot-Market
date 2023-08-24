@@ -26,11 +26,11 @@ public class Like extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "stuff_tb")
+    @JoinColumn(name = "stuffId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Stuff stuff;
 
-    @JoinColumn(name = "user_tb")
+    @JoinColumn(name = "userId")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
