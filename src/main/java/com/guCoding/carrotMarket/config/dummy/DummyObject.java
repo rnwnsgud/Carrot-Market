@@ -1,6 +1,7 @@
 package com.guCoding.carrotMarket.config.dummy;
 
 import com.guCoding.carrotMarket.domain.account.Account;
+import com.guCoding.carrotMarket.domain.like.Like;
 import com.guCoding.carrotMarket.domain.stuff.Stuff;
 import com.guCoding.carrotMarket.domain.stuff.StuffEnum;
 import com.guCoding.carrotMarket.domain.stuff.TransactionEnum;
@@ -57,6 +58,14 @@ public class DummyObject {
                 .number(number)
                 .password(1234L)
                 .balance(balance)
+                .user(user)
+                .build();
+    }
+
+    protected Like newMockLike(Long id, Stuff stuff, User user) {
+        return Like.builder()
+                .id(id)
+                .stuff(stuff)
                 .user(user)
                 .build();
     }

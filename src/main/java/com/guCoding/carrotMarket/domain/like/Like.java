@@ -4,6 +4,7 @@ import com.guCoding.carrotMarket.domain.BaseTimeEntity;
 import com.guCoding.carrotMarket.domain.stuff.Stuff;
 import com.guCoding.carrotMarket.domain.user.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,4 +35,10 @@ public class Like extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @Builder
+    public Like(Long id, Stuff stuff, User user) {
+        this.id = id;
+        this.stuff = stuff;
+        this.user = user;
+    }
 }
