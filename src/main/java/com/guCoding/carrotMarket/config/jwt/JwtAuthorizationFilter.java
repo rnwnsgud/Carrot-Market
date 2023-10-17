@@ -78,7 +78,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 log.debug("디버그 : 임시 세션 수정됨");
 
-            }
+             }
 
         }
         chain.doFilter(request, response);
