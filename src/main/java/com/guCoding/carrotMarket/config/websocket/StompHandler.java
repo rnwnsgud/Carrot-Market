@@ -3,6 +3,7 @@ package com.guCoding.carrotMarket.config.websocket;
 import com.guCoding.carrotMarket.config.auth.LoginUser;
 import com.guCoding.carrotMarket.config.jwt.JwtProvider;
 import com.guCoding.carrotMarket.handler.ex.CustomApiException;
+import com.guCoding.carrotMarket.handler.log.SocketLogger;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,12 +31,17 @@ public class StompHandler implements ChannelInterceptor {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final JwtProvider jwtProvider;
+    private final SocketLogger socketLogger;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         // 로그 찍히나 확인
         log.debug("preSend 진입");
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        String destination = accessor.getDestination();
+        socketLogger.setRequestURL(destination);
+        socketLogger.log("ChannelInterceptor 로그 테스트");
+
         log.debug("accessor.getCommand {}", accessor);
         if (accessor.getCommand() == StompCommand.CONNECT) {
             log.debug("CONNECT");
